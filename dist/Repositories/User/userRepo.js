@@ -13,6 +13,13 @@ exports.userRepo = {
     async findById(id) {
         return user_model_1.User.findById(id);
     },
+    async verifyUser(userId) {
+        return user_model_1.User.findByIdAndUpdate(userId, { verified: true }, { new: true });
+    },
+    // Optionally: Unverify a user
+    async unverifyUser(userId) {
+        return user_model_1.User.findByIdAndUpdate(userId, { verified: false }, { new: true });
+    },
     async findUserByEmailOrPhone(email, phone) {
         return user_model_1.User.findOne({
             $or: [{ email }, { phone }],

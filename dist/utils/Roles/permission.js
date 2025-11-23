@@ -4,6 +4,8 @@ exports.checkModuleAccess = checkModuleAccess;
 const user_model_1 = require("../../Models/user.model");
 const user_modules_model_1 = require("../../Models/user_modules.model");
 const module_model_1 = require("../../Models/module.model");
+const usermodule_1 = require("../../Repositories/UserModules/usermodule");
+const module_repo_1 = require("../../Repositories/Modules/module.repo");
 async function checkModuleAccess(userId, moduleKey) {
     // 1. Load user with role
     const user = await user_model_1.User.findById(userId).populate("user_role");
@@ -29,3 +31,19 @@ async function checkModuleAccess(userId, moduleKey) {
     }
     return true;
 }
+const normalizeRole = (role) => {
+    if (!role)
+        throw new Error("User role not found");
+    return typeof role === "string" ? role : role.toString();
+};
+const checkModuleAcces = async (moduleName, role) => {
+    const normalizedRole = normalizeRole(role);
+    const module = await module_repo_1.Modulefunctions.findByModules(moduleName);
+    if (!module)
+        throw new Error(`Module '${moduleName}' not found`);
+    const access = await usermodule_1.UserModuleService.findUserModuleByGroupAndModule(normalizedRole, module._id.toString());
+    if (!access) {
+        throw new Error(`User does not have access to '${moduleName}'`);
+    }
+    return true;
+};

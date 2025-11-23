@@ -1,6 +1,9 @@
 import { User } from "../../Models/user.model";
 import { UserModules } from "../../Models/user_modules.model";
 import { Module } from "../../Models/module.model";
+import { UserModuleService } from "../../Repositories/UserModules/usermodule";
+import { Modulefunctions } from "../../Repositories/Modules/module.repo";
+import { Types } from "mongoose";
 
 export async function checkModuleAccess(userId: string, moduleKey: string) {
   // 1. Load user with role
@@ -35,3 +38,32 @@ export async function checkModuleAccess(userId: string, moduleKey: string) {
 
   return true;
 }
+
+
+
+const normalizeRole = (role: Types.ObjectId | string | null | undefined): string => {
+  if (!role) throw new Error("User role not found");
+  return typeof role === "string" ? role : role.toString();
+};
+
+const checkModuleAcces = async (
+  moduleName: string,
+  role: Types.ObjectId | string | null | undefined
+) => {
+
+  const normalizedRole = normalizeRole(role);
+
+  const module = await Modulefunctions.findByModules(moduleName);
+  if (!module) throw new Error(`Module '${moduleName}' not found`);
+
+  const access = await UserModuleService.findUserModuleByGroupAndModule(
+    normalizedRole,
+    module._id.toString()
+  );
+
+  if (!access) {
+    throw new Error(`User does not have access to '${moduleName}'`);
+  }
+
+  return true;
+};

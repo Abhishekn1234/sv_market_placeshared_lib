@@ -3,6 +3,12 @@ export declare const userRepo: {
     findById(id: string): Promise<(import("mongoose").Document<unknown, {}, IUser, {}, {}> & IUser & Required<{
         _id: import("mongoose").Types.ObjectId;
     }>) | null>;
+    verifyUser(userId: string): Promise<(import("mongoose").Document<unknown, {}, IUser, {}, {}> & IUser & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }>) | null>;
+    unverifyUser(userId: string): Promise<(import("mongoose").Document<unknown, {}, IUser, {}, {}> & IUser & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }>) | null>;
     findUserByEmailOrPhone(email: string, phone: string): Promise<(import("mongoose").Document<unknown, {}, IUser, {}, {}> & IUser & Required<{
         _id: import("mongoose").Types.ObjectId;
     }>) | null>;
