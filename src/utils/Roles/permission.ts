@@ -41,12 +41,12 @@ export async function checkModuleAccess(userId: string, moduleKey: string) {
 
 
 
-const normalizeRole = (role: Types.ObjectId | string | null | undefined): string => {
+export const normalizeRole = (role: Types.ObjectId | string | null | undefined): string => {
   if (!role) throw new Error("User role not found");
   return typeof role === "string" ? role : role.toString();
 };
 
-const checkModuleAcces = async (
+export const checkModuleAcces = async (
   moduleName: string,
   role: Types.ObjectId | string | null | undefined
 ) => {

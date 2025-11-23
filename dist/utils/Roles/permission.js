@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.checkModuleAcces = exports.normalizeRole = void 0;
 exports.checkModuleAccess = checkModuleAccess;
 const user_model_1 = require("../../Models/user.model");
 const user_modules_model_1 = require("../../Models/user_modules.model");
@@ -36,8 +37,9 @@ const normalizeRole = (role) => {
         throw new Error("User role not found");
     return typeof role === "string" ? role : role.toString();
 };
+exports.normalizeRole = normalizeRole;
 const checkModuleAcces = async (moduleName, role) => {
-    const normalizedRole = normalizeRole(role);
+    const normalizedRole = (0, exports.normalizeRole)(role);
     const module = await module_repo_1.Modulefunctions.findByModules(moduleName);
     if (!module)
         throw new Error(`Module '${moduleName}' not found`);
@@ -47,3 +49,4 @@ const checkModuleAcces = async (moduleName, role) => {
     }
     return true;
 };
+exports.checkModuleAcces = checkModuleAcces;
