@@ -99,7 +99,13 @@ class UserModuleService {
         if (!mongoose_1.Types.ObjectId.isValid(roleId))
             throw new Error("Invalid role ID");
         try {
-            return user_modules_model_1.UserModules.updateMany({ user_group_id: new mongoose_1.Types.ObjectId(roleId) }, { $set: { module_id: module_ids.map(id => new mongoose_1.Types.ObjectId(id)) } });
+            return await user_modules_model_1.UserModules.updateOne({ user_group_id: new mongoose_1.Types.ObjectId(roleId) }, // match ONE record
+            {
+                $set: {
+                    module_id: module_ids.map(id => new mongoose_1.Types.ObjectId(id))
+                }
+            }, { upsert: true } // create only if NOT exists
+            );
         }
         catch (err) {
             throw new Error(`Failed to update user modules: ${err}`);

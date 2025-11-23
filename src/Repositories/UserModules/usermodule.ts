@@ -105,17 +105,23 @@ export class UserModuleService {
   }
 
   // ➤ Update modules for a role
-  static async updateUserModulesByRoleId(roleId: string, module_ids: string[]) {
-    if (!Types.ObjectId.isValid(roleId)) throw new Error("Invalid role ID");
-    try {
-      return UserModules.updateMany(
-        { user_group_id: new Types.ObjectId(roleId) },
-        { $set: { module_id: module_ids.map(id => new Types.ObjectId(id)) } }
-      );
-    } catch (err) {
-      throw new Error(`Failed to update user modules: ${err}`);
-    }
+ static async updateUserModulesByRoleId(roleId: string, module_ids: string[]) {
+  if (!Types.ObjectId.isValid(roleId)) throw new Error("Invalid role ID");
+
+  try {
+    return await UserModules.updateOne(
+      { user_group_id: new Types.ObjectId(roleId) }, // match ONE record
+      {
+        $set: {
+          module_id: module_ids.map(id => new Types.ObjectId(id))
+        }
+      },
+      { upsert: true } // create only if NOT exists
+    );
+  } catch (err) {
+    throw new Error(`Failed to update user modules: ${err}`);
   }
+}
 
   // ➤ Delete modules for role
   static async deleteUserModulesByRoleId(roleId: string) {
