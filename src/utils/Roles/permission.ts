@@ -19,7 +19,7 @@ export async function checkModuleAccess(userId: string, moduleKey: string) {
     throw new Error("User has no role assigned");
   }
 
-  // 2. Find module by modulelanguagekey (or module name)
+  // 2. Find module by modulelanguagekey
   const moduleData = await Module.findOne({ modulelanguagekey: moduleKey });
 
   if (!moduleData) {
@@ -38,6 +38,7 @@ export async function checkModuleAccess(userId: string, moduleKey: string) {
 
   return true;
 }
+
 
 
 

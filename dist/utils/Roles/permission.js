@@ -17,7 +17,7 @@ async function checkModuleAccess(userId, moduleKey) {
     if (!roleId) {
         throw new Error("User has no role assigned");
     }
-    // 2. Find module by modulelanguagekey (or module name)
+    // 2. Find module by modulelanguagekey
     const moduleData = await module_model_1.Module.findOne({ modulelanguagekey: moduleKey });
     if (!moduleData) {
         throw new Error(`Module '${moduleKey}' not found`);
