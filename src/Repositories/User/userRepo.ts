@@ -8,6 +8,22 @@ export const userRepo = {
   async findById(id: string) {
     return User.findById(id);
   },
+   async verifyUser(userId: string) {
+    return User.findByIdAndUpdate(
+      userId,
+      { verified: true },
+      { new: true }
+    );
+  },
+
+  // Optionally: Unverify a user
+  async unverifyUser(userId: string) {
+    return User.findByIdAndUpdate(
+      userId,
+      { verified: false },
+      { new: true }
+    );
+  },
 
   async findUserByEmailOrPhone(email: string, phone: string) {
     return User.findOne({
