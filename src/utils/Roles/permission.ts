@@ -6,7 +6,7 @@ import { Modulefunctions } from "../../Repositories/Modules/module.repo";
 import { Types } from "mongoose";
 
 export async function checkModuleAccess(userId: string, moduleKey: string) {
-  // 1. Load user with role
+
   const user = await User.findById(userId).populate("user_role");
 
   if (!user) {
@@ -19,14 +19,13 @@ export async function checkModuleAccess(userId: string, moduleKey: string) {
     throw new Error("User has no role assigned");
   }
 
-  // 2. Find module by modulelanguagekey
   const moduleData = await Module.findOne({ modulelanguagekey: moduleKey });
 
   if (!moduleData) {
     throw new Error(`Module '${moduleKey}' not found`);
   }
 
-  // 3. Check mapping in UserModules
+
   const userModule = await UserModules.findOne({
     user_group_id: roleId,
     module_id: moduleData._id,

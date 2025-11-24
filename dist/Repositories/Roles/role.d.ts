@@ -1,3 +1,4 @@
+import { IModule } from "../../Types/Module";
 import { UserRole } from "../../Types/Role";
 export declare class Rolefunctions {
     static updateRole(id: string, data: Partial<UserRole>): Promise<(import("mongoose").Document<unknown, {}, UserRole, {}, {}> & UserRole & Required<{
@@ -20,6 +21,9 @@ export declare class Rolefunctions {
     }> & {
         __v: number;
     }) | null>;
+    static fetchRolesWithModules(): Promise<(UserRole & {
+        modules: IModule[];
+    })[]>;
     static fetchRoles(): Promise<(import("mongoose").Document<unknown, {}, UserRole, {}, {}> & UserRole & Required<{
         _id: import("mongoose").Schema.Types.ObjectId;
     }> & {
