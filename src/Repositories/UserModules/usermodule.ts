@@ -1,7 +1,11 @@
+import { Module } from "../../Models/module.model";
+import { Role } from "../../Models/user.role.model";
 import { UserModules } from "../../Models/user_modules.model";
 import { IUserModules } from "../../Types/UserModule";
 import { Types } from "mongoose";
-
+import { userRepo } from "../User/userRepo";
+import { IUser } from "../../Models/user.model";
+import { IModule } from "../../Types/Module";
 export class UserModuleService {
   // ➤ Find all user modules
   static async findAllUserModules(): Promise<IUserModules[]> {
@@ -11,6 +15,31 @@ export class UserModuleService {
       throw new Error(`Failed to fetch user modules: ${err}`);
     }
   }
+static async getUserWithRoleAndModules(userId: string){
+  
+  const user: IUser | null = await userRepo.getUserById(userId);
+  if (!user) throw new Error("User not found");
+
+  const role = await Role.findById(user.user_role);
+  if (!role) throw new Error("Role not found");
+
+  
+  const userModules = await UserModules.findOne({ user_group_id: role._id });
+ let modules: IModule[] = [];
+
+
+  if (userModules?.module_id?.length) {
+   
+    modules = await Module.find({ _id: { $in: userModules.module_id } });
+  }
+
+  
+  return {
+    ...user.toObject(),
+    roleDetails: role,
+    modules,
+  };
+};
 
   // ➤ Create user module
   static async createUserModule(

@@ -15,6 +15,7 @@ export const userRepo = {
       { new: true }
     );
   },
+  
 
   // Optionally: Unverify a user
   async unverifyUser(userId: string) {
