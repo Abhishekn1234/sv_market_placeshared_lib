@@ -46,7 +46,7 @@ const userSchema = new Schema<IUser>(
     fullName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     phone: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    password: { type: String},
      LoginDate:{type:Date},
      LoginTime:{type:String},
      LogoutDate:{type:Date},
