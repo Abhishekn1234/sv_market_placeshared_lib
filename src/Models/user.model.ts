@@ -56,7 +56,7 @@ const userSchema = new Schema<IUser>(
     address: { type: String },
 
      
-    user_role: { type: mongoose.Schema.Types.ObjectId, ref: "UserRole", default: null },
+    user_role: { type: Types.ObjectId, ref: "UserRole", default: null },
     isVerified: { type: Boolean, default: false },
     profilePictureUrl:{type:String},
     profilePicturePublicId:{type: String},

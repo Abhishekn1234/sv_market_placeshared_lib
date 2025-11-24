@@ -9,7 +9,7 @@ export class Rolefunctions {
     static async updateRole(id: string, data: Partial<UserRole>) {
         return await Role.findByIdAndUpdate(id, data, { new: true });
     }
-
+    
     static async deleteRole(id: string) {
         return await Role.findByIdAndDelete(id);
     }
