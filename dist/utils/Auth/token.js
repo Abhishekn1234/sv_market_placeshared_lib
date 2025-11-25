@@ -14,7 +14,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 //   });
 //   return { accessToken, refreshToken };
 // };
-const generateAccessToken = (id) => jsonwebtoken_1.default.sign({ id }, process.env.JWT_ACCESS_SECRET, { expiresIn: "30s" });
+const generateAccessToken = (id) => jsonwebtoken_1.default.sign({ id }, process.env.JWT_ACCESS_SECRET, { expiresIn: "1h" });
 exports.generateAccessToken = generateAccessToken;
 const generateRefreshToken = (id) => jsonwebtoken_1.default.sign({ id }, process.env.JWT_REFRESH_SECRET, { expiresIn: "7d" });
 exports.generateRefreshToken = generateRefreshToken;
