@@ -19,23 +19,19 @@ class Rolefunctions {
     }
     static async fetchRolesWithModules() {
         // 1. Fetch all roles
-        const roles = await user_role_model_1.Role.find();
+        const roles = await user_role_model_1.Role.find().lean();
         // 2. For each role, find its linked modules and fetch full module details
         const rolesWithModules = await Promise.all(roles.map(async (role) => {
-            // Find UserModules entry for this role
-            const userModulesEntry = await user_modules_model_1.UserModules.findOne({
-                user_group_id: role._id,
-            });
-            let modules = []; // modules details array
+            const userModulesEntry = await user_modules_model_1.UserModules.findOne({ user_group_id: role._id });
+            let modules = [];
             if (userModulesEntry && userModulesEntry.module_id.length) {
-                // Fetch all modules whose _id is in module_id array
-                modules = await module_model_1.Module.find({
-                    _id: { $in: userModulesEntry.module_id },
-                });
+                modules = await module_model_1.Module.find({ _id: { $in: userModulesEntry.module_id } });
             }
+            // Only pick name and modules
             return {
-                ...role.toObject(),
-                modulesList: modules, // add actual module details in a new property
+                _id: role._id,
+                name: role.name,
+                modules, // attach modules array
             };
         }));
         return rolesWithModules;

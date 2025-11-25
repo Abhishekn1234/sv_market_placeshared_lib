@@ -1,6 +1,6 @@
 import { ObjectId, Types } from "mongoose";
 import { IUserModules } from "./UserModule";
-import { IModule } from "./Module";
+import { IModule, IUserModulesResponse } from "./Module";
 
 // export interface Roles extends Document {
 //   _id:ObjectId;
@@ -16,5 +16,5 @@ export type KYCSTATUS="pending"|"verified"|"rejected"|"not_submitted"|"submitted
 export interface UserRole extends Document {
   _id: Types.ObjectId;
   name: string;
-  modules: IUserModules[]; // each role has an array of IUserModules
+  modules: IUserModulesResponse[] | []; // each role has an array of IUserModules
 }
