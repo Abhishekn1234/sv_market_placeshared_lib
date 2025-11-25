@@ -11,10 +11,12 @@ export interface RegisterUserResponse {
   refreshToken: string;
 }
 export interface UpdateUserResponse {
-  user:IUser;
-  documents?: IKYCDocument[]; 
-  role?: UserRole | null;
+  user: IUser & {
+    documents?: IKYCDocument[];
+    role?: UserRole | null;
+  };
 }
+
 export interface ChangePasswordResponse {
   success: boolean;
   message: string;
