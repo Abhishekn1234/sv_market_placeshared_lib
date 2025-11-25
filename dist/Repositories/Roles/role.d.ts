@@ -2,22 +2,22 @@ import { IModule } from "../../Types/Module";
 import { UserRole } from "../../Types/Role";
 export declare class Rolefunctions {
     static updateRole(id: string, data: Partial<UserRole>): Promise<(import("mongoose").Document<unknown, {}, UserRole, {}, {}> & UserRole & Required<{
-        _id: import("mongoose").Schema.Types.ObjectId;
+        _id: import("mongoose").Types.ObjectId;
     }> & {
         __v: number;
     }) | null>;
     static deleteRole(id: string): Promise<(import("mongoose").Document<unknown, {}, UserRole, {}, {}> & UserRole & Required<{
-        _id: import("mongoose").Schema.Types.ObjectId;
+        _id: import("mongoose").Types.ObjectId;
     }> & {
         __v: number;
     }) | null>;
     static fetchRoleById(id: string): Promise<(import("mongoose").Document<unknown, {}, UserRole, {}, {}> & UserRole & Required<{
-        _id: import("mongoose").Schema.Types.ObjectId;
+        _id: import("mongoose").Types.ObjectId;
     }> & {
         __v: number;
     }) | null>;
     static fetchByNames(name: string): Promise<(import("mongoose").Document<unknown, {}, UserRole, {}, {}> & UserRole & Required<{
-        _id: import("mongoose").Schema.Types.ObjectId;
+        _id: import("mongoose").Types.ObjectId;
     }> & {
         __v: number;
     }) | null>;
@@ -25,7 +25,7 @@ export declare class Rolefunctions {
         modulesList: IModule[];
     })[]>;
     static fetchRoles(): Promise<(import("mongoose").Document<unknown, {}, UserRole, {}, {}> & UserRole & Required<{
-        _id: import("mongoose").Schema.Types.ObjectId;
+        _id: import("mongoose").Types.ObjectId;
     }> & {
         __v: number;
     })[]>;

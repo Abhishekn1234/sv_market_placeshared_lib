@@ -1,6 +1,7 @@
 import { IUser } from "../Models/user.model";
 import { IKYCDocument } from "../Models/kyc.model";
 import { UserRole } from "./Role";
+import { IModule } from "./Module";
 export interface RegisterUserResponse {
     user: IUser & {
         documents: IKYCDocument[];
@@ -10,8 +11,7 @@ export interface RegisterUserResponse {
     accessToken: string;
     refreshToken: string;
 }
-export interface UpdateUserResponse {
-    user: IUser;
+export interface UpdateUserResponse extends IUser {
     documents?: IKYCDocument[];
     role?: UserRole | null;
 }
@@ -22,6 +22,8 @@ export interface ChangePasswordResponse {
 export interface LoginUserResponse {
     user: IUser & {
         documents: IKYCDocument[];
+        roles: UserRole | null;
+        modules: IModule[];
         kycStatus: string;
         roleName: string;
     };
