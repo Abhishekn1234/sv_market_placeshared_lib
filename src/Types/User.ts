@@ -10,12 +10,11 @@ export interface RegisterUserResponse {
   accessToken: string;
   refreshToken: string;
 }
-export interface UpdateUserResponse {
-  user: IUser & {
-    documents?: IKYCDocument[];
-    role?: UserRole | null;
-  };
+export interface UpdateUserResponse extends IUser {
+  documents?: IKYCDocument[];
+  role?: UserRole | null;
 }
+
 
 export interface ChangePasswordResponse {
   success: boolean;
