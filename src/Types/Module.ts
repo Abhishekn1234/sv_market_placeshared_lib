@@ -9,3 +9,20 @@ export interface IModule extends Document {
   alinkColor?: string; // optional
   all?: any;          // optional for extra data
 }
+export interface IUserModulesResponse {
+  _id: string;
+  user_group_id: string;
+  module_id: {
+    _id: string;
+    module: string;
+    modulelanguagekey: string;
+    sort: number;
+    parent: string;
+  }[];
+}
+
+export interface UserRoleResponse {
+  _id: string;
+  name: string;
+  modules: IUserModulesResponse[];
+}
