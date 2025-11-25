@@ -50,7 +50,7 @@ const userSchema = new mongoose_1.Schema({
     LogoutTime: { type: String },
     duration: { type: String },
     address: { type: String },
-    user_role: { type: mongoose_1.default.Schema.Types.ObjectId, ref: "UserRole", default: null },
+    user_role: { type: mongoose_1.Types.ObjectId, ref: "UserRole", default: null },
     isVerified: { type: Boolean, default: false },
     profilePictureUrl: { type: String },
     profilePicturePublicId: { type: String },

@@ -20,7 +20,7 @@ const sanitizeUser = (userObj) => {
     const removeFields = [
         "password", "otp", "otpExpire", "resetPasswordToken", "resetPasswordExpire",
         "emailVerificationToken", "LoginDate", "LoginTime", "LogoutDate", "LogoutTime",
-        "duration", "__v", "createdAt", "updatedAt", "accessToken", "refreshToken"
+        "duration", "__v", "accessToken", "refreshToken", "role", "password", "__v"
     ];
     removeFields.forEach(key => delete userObj[key]);
     return userObj;

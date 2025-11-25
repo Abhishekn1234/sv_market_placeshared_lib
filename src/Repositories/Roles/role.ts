@@ -21,33 +21,36 @@ export class Rolefunctions {
     static async fetchByNames(name: string) {
         return await Role.findOne({ name });
     }
-   static async fetchRolesWithModules(): Promise<(UserRole & { modules: IModule[] })[]> {
-  const roles = await Role.find(); // get all roles
+static async fetchRolesWithModules(): Promise<(UserRole & { modulesList: IModule[] })[]> {
+    // 1. Fetch all roles
+    const roles = await Role.find();
 
-  const rolesWithModules = await Promise.all(
-    roles.map(async (role) => {
-      // Find user_modules entry for this role
-      const userModulesEntry = await UserModules.findOne({
-        user_group_id: role._id,
-      });
+    // 2. For each role, find its linked modules and fetch full module details
+    const rolesWithModules = await Promise.all(
+      roles.map(async (role) => {
+        // Find UserModules entry for this role
+        const userModulesEntry = await UserModules.findOne({
+          user_group_id: role._id,
+        });
 
-      let modules: IModule[] = []; // explicitly type it
-      if (userModulesEntry && userModulesEntry.module_id.length) {
-        // Fetch all modules whose _id is in module_id array
-        modules = await Module.find({
-          _id: { $in: userModulesEntry.module_id },
-        }) as IModule[]; // type cast
-      }
+        let modules: IModule[] = []; // modules details array
+        if (userModulesEntry && userModulesEntry.module_id.length) {
+          // Fetch all modules whose _id is in module_id array
+          modules = await Module.find({
+            _id: { $in: userModulesEntry.module_id },
+          }) as IModule[];
+        }
 
-      return {
-        ...role.toObject(),
-        modules, // add modules array to the role
-      };
-    })
-  );
+        return {
+          ...role.toObject(),
+          modulesList: modules, // add actual module details in a new property
+        };
+      })
+    );
 
-  return rolesWithModules;
-}
+    return rolesWithModules;
+  }
+
     static async fetchRoles() {
         return await Role.find();
     }

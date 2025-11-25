@@ -2,6 +2,7 @@ import { IUserModules } from "../../Types/UserModule";
 import { Types } from "mongoose";
 export declare class UserModuleService {
     static findAllUserModules(): Promise<IUserModules[]>;
+    static getUserWithRoleAndModules(userId: string): Promise<any>;
     static createUserModule(user_group_id: string, module_id: string): Promise<IUserModules>;
     static findUserModuleById(id: string): Promise<IUserModules | null>;
     static findUserModuleByGroupAndModule(user_group_id: string, module_id: string): Promise<IUserModules | null>;

@@ -1,8 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserModuleService = void 0;
+const module_model_1 = require("../../Models/module.model");
+const user_role_model_1 = require("../../Models/user.role.model");
 const user_modules_model_1 = require("../../Models/user_modules.model");
 const mongoose_1 = require("mongoose");
+const userRepo_1 = require("../User/userRepo");
 class UserModuleService {
     // ➤ Find all user modules
     static async findAllUserModules() {
@@ -13,6 +16,25 @@ class UserModuleService {
             throw new Error(`Failed to fetch user modules: ${err}`);
         }
     }
+    static async getUserWithRoleAndModules(userId) {
+        const user = await userRepo_1.userRepo.getUserById(userId);
+        if (!user)
+            throw new Error("User not found");
+        const role = await user_role_model_1.Role.findById(user.user_role);
+        if (!role)
+            throw new Error("Role not found");
+        const userModules = await user_modules_model_1.UserModules.findOne({ user_group_id: role._id });
+        let modules = [];
+        if (userModules?.module_id?.length) {
+            modules = await module_model_1.Module.find({ _id: { $in: userModules.module_id } });
+        }
+        return {
+            ...user.toObject(),
+            roleDetails: role,
+            modules,
+        };
+    }
+    ;
     // ➤ Create user module
     static async createUserModule(user_group_id, module_id) {
         try {
