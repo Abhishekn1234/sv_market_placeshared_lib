@@ -128,6 +128,7 @@ exports.userRepo = {
         return {
             users: usersWithRoles,
             totalUsers: users.length,
+            totalItems: users.length
         };
     },
     // Get user by ID

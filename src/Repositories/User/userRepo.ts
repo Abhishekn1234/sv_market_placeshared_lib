@@ -171,6 +171,7 @@ async getAllUsers() {
   return {
     users: usersWithRoles,
     totalUsers: users.length,
+    totalItems:users.length
   };
 },
 

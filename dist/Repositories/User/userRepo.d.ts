@@ -337,6 +337,7 @@ export declare const userRepo: {
             };
         }[];
         totalUsers: number;
+        totalItems: number;
     }>;
     getUserById(id: string): Promise<(import("mongoose").Document<unknown, {}, IUser, {}, {}> & IUser & Required<{
         _id: Types.ObjectId;
