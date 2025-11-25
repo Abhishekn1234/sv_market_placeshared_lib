@@ -1,4 +1,5 @@
 import { ObjectId } from "mongoose";
+import { IUserModules } from "./UserModule";
 
 // export interface Roles extends Document {
 //   _id:ObjectId;
@@ -15,5 +16,5 @@ export interface UserRole extends Document {
   _id:ObjectId;
   name: string;
 
-
+  modules:IUserModules[]
 }

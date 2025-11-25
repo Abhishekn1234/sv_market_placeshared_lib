@@ -1,5 +1,6 @@
 import { IUser, User } from "../Models/user.model";
 import { IKYCDocument, IKYC } from "../Models/kyc.model";
+import { UserRole } from "./Role";
 export interface RegisterUserResponse {
   user: IUser & {
     documents: IKYCDocument[];
@@ -9,7 +10,11 @@ export interface RegisterUserResponse {
   accessToken: string;
   refreshToken: string;
 }
-
+export interface UpdateUserResponse {
+  user:IUser;
+  documents?: IKYCDocument[]; 
+  role?: UserRole | null;
+}
 export interface ChangePasswordResponse {
   success: boolean;
   message: string;

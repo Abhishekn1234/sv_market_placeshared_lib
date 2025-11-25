@@ -79,6 +79,7 @@ const userSchema = new Schema<IUser>(
 
     resetPasswordToken: String,
     resetPasswordExpire: Date,
+    
   },
   { timestamps: true }
 );

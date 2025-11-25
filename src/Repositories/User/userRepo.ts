@@ -112,40 +112,45 @@ export const userRepo = {
   // -------------------------
 
   // Get all users
-async  getAllUsers () {
+async getAllUsers() {
   // 1️⃣ Fetch all users
   const users = await User.find().sort({ createdAt: -1 }).lean();
 
-  // 2️⃣ Collect all unique role IDs
-  const roleIds = users.map(user => user.user_role).filter(Boolean) as Types.ObjectId[];
+  // 2️⃣ Get all unique role IDs from users (excluding null)
+  const roleIds = users
+    .map(u => u.user_role)
+    .filter(Boolean)
+    .map(id => id);
 
-  // 3️⃣ Fetch all roles
-  const roles = await Role.find({ _id: { $in: roleIds } }).lean();
+  // 3️⃣ Fetch ALL roles (not only user roles)
+  const roles = await Role.find().lean();
 
-  // 4️⃣ Fetch all UserModules for these roles
-  const userModulesList = await UserModules.find({ user_group_id: { $in: roleIds } }).lean();
+  // 4️⃣ Fetch all UserModules (for all roles)
+  const userModulesList = await UserModules.find().lean();
 
   // 5️⃣ Collect all module IDs
-  const moduleIds = userModulesList.flatMap(
-  um => (um.module_id ?? []) as Types.ObjectId[]
-);
-
+  const moduleIds = userModulesList.flatMap(um =>
+    (um.module_id ?? []).map((m: any) => m.toString())
+  );
 
   // 6️⃣ Fetch all modules
   const modules = await Module.find({ _id: { $in: moduleIds } }).lean();
 
-  // 7️⃣ Map module _id => module object
+  // 7️⃣ Build modules map
   const modulesMap = new Map<string, any>();
   modules.forEach(mod => modulesMap.set(mod._id.toString(), mod));
 
-  // 8️⃣ Map roleId => modules array
+  // 8️⃣ Build roleId → modules[] map
   const roleModulesMap = new Map<string, any[]>();
   userModulesList.forEach(um => {
-    const mods = (um.module_id || []).map(id => modulesMap.get(id.toString())).filter(Boolean);
+    const mods = (um.module_id || [])
+      .map((m: any) => modulesMap.get(m.toString()))
+      .filter(Boolean);
+
     roleModulesMap.set(um.user_group_id.toString(), mods);
   });
 
-  // 9️⃣ Map roleId => role object with modules injected
+  // 9️⃣ Build roleId → roleWithModules map
   const rolesMap = new Map<string, any>();
   roles.forEach(role => {
     rolesMap.set(role._id.toString(), {
@@ -154,17 +159,19 @@ async  getAllUsers () {
     });
   });
 
-  // 🔟 Inject role with modules into each user
- const usersWithRoles = users.map(user => {
-  const roleId = user.user_role?.toString(); 
+  // 🔟 Inject role + modules into each user
+  const usersWithRoles = users.map(user => {
+    const roleId = user.user_role?.toString();
+    return {
+      ...user,
+      role: roleId ? rolesMap.get(roleId) : null
+    };
+  });
+
   return {
-    ...user,
-    role: roleId ? rolesMap.get(roleId) : null
+    users: usersWithRoles,
+    totalUsers: users.length,
   };
-});
-
-
-  return usersWithRoles;
 },
 
   // Get user by ID
