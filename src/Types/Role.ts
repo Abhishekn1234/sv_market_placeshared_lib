@@ -1,4 +1,4 @@
-import { ObjectId } from "mongoose";
+import { ObjectId, Types } from "mongoose";
 import { IUserModules } from "./UserModule";
 import { IModule } from "./Module";
 
@@ -14,8 +14,7 @@ export type RoleType = "user" | "admin" | "superadmin" | "employee" | "coordinat
 export type KYCSTATUS="pending"|"verified"|"rejected"|"not_submitted"|"submitted";
 
 export interface UserRole extends Document {
-  _id:ObjectId;
+  _id: Types.ObjectId;
   name: string;
-
-  modules:IModule[]
+  modules: IUserModules[]; // each role has an array of IUserModules
 }
