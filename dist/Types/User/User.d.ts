@@ -1,5 +1,7 @@
 import { Types } from "mongoose";
 import { KYCSTATUS } from "../Kyc/KycStatus";
+import { IKYCDocument } from "../Kyc/Kycdocument";
+import { UserRole } from "../Roles/UserRole";
 export interface IUser extends Document {
     _id: Types.ObjectId;
     fullName: string;
@@ -9,6 +11,8 @@ export interface IUser extends Document {
     updatedAt: Date;
     password: string;
     bio: string;
+    documents?: IKYCDocument[];
+    roles?: UserRole[];
     user_role?: Types.ObjectId | null;
     isVerified: boolean;
     kycStatus: KYCSTATUS;
