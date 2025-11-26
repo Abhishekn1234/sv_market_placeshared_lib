@@ -2,7 +2,7 @@ import { Types } from "mongoose";
 import { KYCSTATUS } from "../Kyc/KycStatus";
 import { IKYCDocument } from "../Kyc/Kycdocument";
 import { UserRole } from "../Roles/UserRole";
-export interface IUser {
+export interface IUser extends Document {
     _id: Types.ObjectId;
     fullName: string;
     email: string;
