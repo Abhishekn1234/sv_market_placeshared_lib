@@ -51,7 +51,7 @@ const userSchema = new mongoose_1.Schema({
     duration: { type: String },
     address: { type: String },
     user_role: { type: mongoose_1.Types.ObjectId, ref: "UserRole", default: null },
-    documents: { type: mongoose_1.Types.ObjectId, ref: "KYC" },
+    documents: { type: mongoose_1.Types.ObjectId, ref: "KYC", default: [] },
     isVerified: { type: Boolean, default: false },
     profilePictureUrl: { type: String },
     profilePicturePublicId: { type: String },
