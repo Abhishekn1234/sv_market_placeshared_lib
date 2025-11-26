@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { IKYCDocument } from "./Kycdocument";
-export interface IKYC extends Document {
+export interface IKYC {
     userId: mongoose.Schema.Types.ObjectId;
     nationality: "Saudi" | "GCC" | "Other";
     address: {

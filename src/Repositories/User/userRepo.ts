@@ -81,7 +81,7 @@ export const  userRepo: IUserRepo= {
   },
 
   // In userRepo
- async createUser(data: IUser): Promise<Document & IUser> {
+ async createUser(data: IUser): Promise<IUser> {
   return User.create(data); // actual Mongoose document
 },
 

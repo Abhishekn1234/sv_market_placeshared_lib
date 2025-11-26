@@ -6,7 +6,7 @@ interface IUserModulesWithId extends IUserModules {
   _id: mongoose.Types.ObjectId;
 }
 
-export interface IUserModules extends Document {
+export interface IUserModules{
   user_group_id: Types.ObjectId | UserRole;
   module_id: Types.ObjectId[] | IModule[];  
 }

@@ -3,7 +3,7 @@ import { KYCSTATUS } from "../Kyc/KycStatus";
 import { IKYCDocument } from "../Kyc/Kycdocument";
 import { UserRole } from "../Roles/UserRole";
 
-export interface IUser extends Document {
+export interface IUser{
   _id: Types.ObjectId;
   fullName: string;
   email: string;
