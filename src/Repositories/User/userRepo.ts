@@ -184,21 +184,31 @@ async getAllUsers() {
     return user;
     
   },
-  async getsearch(search: string): Promise<IUser[]> {
-    if (!search || search.trim() === "") {
-      return []; // or throw new Error("Search string is required");
-    }
+  async getsearch (search: string): Promise<IUser[]>{
+  if (!search || search.trim() === "") return [];
 
-    const users = await User.find({
-      $or: [
-        { name: { $regex: search, $options: "i" } },
-        { email: { $regex: search, $options: "i" } },
-        { phone: { $regex: search, $options: "i" } },
-      ],
-    });
+  // Search users and populate KYC documents and role
+  const users = await User.find({
+    $or: [
+      { fullName: { $regex: search, $options: "i" } },
+      { email: { $regex: search, $options: "i" } },
+      { phone: { $regex: search, $options: "i" } },
+    ],
+  })
+    .populate("documents")   // populate KYC documents
+    .populate("user_role");  // populate role
 
-    return users;
-  },
+  // Optional: if you want a "roles" array for consistency
+  const usersWithRoles = users.map(user => {
+    const u = user.toObject();
+    return {
+      ...u,
+      roles: u.user_role ? [u.user_role] : [],
+    };
+  });
+
+  return usersWithRoles as IUser[];
+},
 
 
   // Create user (already exists, but adding alias if needed)

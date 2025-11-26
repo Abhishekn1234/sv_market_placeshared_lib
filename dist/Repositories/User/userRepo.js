@@ -138,17 +138,27 @@ exports.userRepo = {
         return user;
     },
     async getsearch(search) {
-        if (!search || search.trim() === "") {
-            return []; // or throw new Error("Search string is required");
-        }
+        if (!search || search.trim() === "")
+            return [];
+        // Search users and populate KYC documents and role
         const users = await user_model_1.User.find({
             $or: [
-                { name: { $regex: search, $options: "i" } },
+                { fullName: { $regex: search, $options: "i" } },
                 { email: { $regex: search, $options: "i" } },
                 { phone: { $regex: search, $options: "i" } },
             ],
+        })
+            .populate("documents") // populate KYC documents
+            .populate("user_role"); // populate role
+        // Optional: if you want a "roles" array for consistency
+        const usersWithRoles = users.map(user => {
+            const u = user.toObject();
+            return {
+                ...u,
+                roles: u.user_role ? [u.user_role] : [],
+            };
         });
-        return users;
+        return usersWithRoles;
     },
     // Create user (already exists, but adding alias if needed)
     async createNewUser(data) {

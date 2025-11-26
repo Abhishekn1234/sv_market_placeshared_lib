@@ -12,8 +12,7 @@ export interface IUser extends Document {
     password: string;
     bio: string;
     documents?: IKYCDocument[];
-    roles?: UserRole[];
-    user_role?: Types.ObjectId | null;
+    user_role?: Types.ObjectId | UserRole | null;
     isVerified: boolean;
     kycStatus: KYCSTATUS;
     nationality: string;

@@ -19,8 +19,7 @@ export declare class UserModuleService {
         password: string;
         bio: string;
         documents?: import("../..").IKYCDocument[];
-        roles?: import("../..").UserRole[];
-        user_role?: Types.ObjectId | null;
+        user_role?: Types.ObjectId | import("../..").UserRole | null;
         isVerified: boolean;
         kycStatus: import("../../Types/Kyc/KycStatus").KYCSTATUS;
         nationality: string;
