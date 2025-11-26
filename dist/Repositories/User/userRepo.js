@@ -155,11 +155,11 @@ exports.userRepo = {
     },
     // Create user (already exists, but adding alias if needed)
     async createNewUser(data) {
-        return user_model_1.User.create(data).then(doc => doc.toObject());
+        return user_model_1.User.create(data);
     },
     // Update user by ID
-    async updateUser(id, data) {
-        return user_model_1.User.findByIdAndUpdate(id, data, { new: true });
+    async updateUser(id, payload) {
+        return await user_model_1.User.findByIdAndUpdate(id, payload, { new: true }).lean();
     },
     // Delete user by ID
     async deleteUser(id) {
