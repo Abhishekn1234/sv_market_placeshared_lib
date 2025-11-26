@@ -148,9 +148,8 @@ exports.userRepo = {
                 { phone: { $regex: search, $options: "i" } },
             ],
         })
-            .populate("documents") // populate KYC documents
+            // .populate("documents")   // populate KYC documents
             .populate("user_role"); // populate role
-        // Optional: if you want a "roles" array for consistency
         const usersWithRoles = users.map(user => {
             const u = user.toObject();
             return {
