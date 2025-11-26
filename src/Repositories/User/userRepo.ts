@@ -179,7 +179,7 @@ async getAllUsers() {
 
   // Get user by ID
   async getUserById(id: string) {
-    return User.findById(id);
+    return await User.findById(id);
   },
 
   // Create user (already exists, but adding alias if needed)

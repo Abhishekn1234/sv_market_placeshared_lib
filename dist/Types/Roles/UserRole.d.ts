@@ -3,6 +3,6 @@ import { IUserModulesResponse } from "../UserModule/userModuleResponse";
 export interface UserRole extends Document {
     _id: Types.ObjectId;
     name: string;
-    modules: IUserModulesResponse[] | [];
+    modules: IUserModulesResponse[];
 }
 //# sourceMappingURL=UserRole.d.ts.map
