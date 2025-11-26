@@ -197,17 +197,9 @@ async getAllUsers() {
   })
     // .populate("documents")   // populate KYC documents
     .populate("user_role");  // populate role
-
+     
   
-  const usersWithRoles = users.map(user => {
-    const u = user.toObject();
-    return {
-      ...u,
-      roles: u.user_role ? [u.user_role] : [],
-    };
-  });
-
-  return usersWithRoles as IUser[];
+  return users as IUser[];
 },
 
 

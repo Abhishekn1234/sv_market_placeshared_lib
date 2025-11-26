@@ -20,6 +20,7 @@ const userSchema = new Schema<IUser>(
 
      
     user_role: { type: Types.ObjectId, ref: "UserRole", default: null },
+    documents:{type:Types.ObjectId,ref:"KYC"},
     isVerified: { type: Boolean, default: false },
     profilePictureUrl:{type:String},
     profilePicturePublicId:{type: String},
