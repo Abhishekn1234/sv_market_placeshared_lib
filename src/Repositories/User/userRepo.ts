@@ -205,8 +205,8 @@ async getAllUsers() {
 
 
   // Create user (already exists, but adding alias if needed)
-  async createNewUser(data: Partial<IUser>) {
-    return User.create(data);
+  async createNewUser(data: IUser): Promise<IUser> {
+     return User.create(data).then(doc => doc.toObject());
   },
 
   // Update user by ID

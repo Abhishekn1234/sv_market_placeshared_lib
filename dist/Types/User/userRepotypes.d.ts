@@ -24,7 +24,7 @@ export interface IUserRepo {
     }>;
     getsearch(search: string): Promise<IUser[]>;
     getUserById(id: string): Promise<IUser | null>;
-    createNewUser(data: Partial<IUser>): Promise<IUser>;
+    createNewUser(data: IUser): Promise<IUser>;
     updateUser(id: string, data: Partial<IUser>): Promise<IUser | null>;
     deleteUser(id: string): Promise<IUser | null>;
 }

@@ -155,7 +155,7 @@ exports.userRepo = {
     },
     // Create user (already exists, but adding alias if needed)
     async createNewUser(data) {
-        return user_model_1.User.create(data);
+        return user_model_1.User.create(data).then(doc => doc.toObject());
     },
     // Update user by ID
     async updateUser(id, data) {
