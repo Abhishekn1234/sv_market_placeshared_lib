@@ -179,7 +179,10 @@ async getAllUsers() {
 
   // Get user by ID
   async getUserById(id: string) {
-    return await User.findById(id);
+    const user=await User.findById(id);
+    console.log(user);
+    return user;
+    
   },
 
   // Create user (already exists, but adding alias if needed)

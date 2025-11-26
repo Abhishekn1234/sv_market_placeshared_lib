@@ -133,7 +133,9 @@ exports.userRepo = {
     },
     // Get user by ID
     async getUserById(id) {
-        return await user_model_1.User.findById(id);
+        const user = await user_model_1.User.findById(id);
+        console.log(user);
+        return user;
     },
     // Create user (already exists, but adding alias if needed)
     async createNewUser(data) {
