@@ -1,11 +1,11 @@
 import { Module } from "../../Models/module.model";
 import { Role } from "../../Models/user.role.model";
 import { UserModules } from "../../Models/user_modules.model";
-import { IUserModules } from "../../Types/UserModule";
+import { IUserModules } from "../../Types/UserModule/UserModule";
 import { Types } from "mongoose";
 import { userRepo } from "../User/userRepo";
-import { IUser } from "../../Models/user.model";
-import { IModule } from "../../Types/Module";
+import { IUser } from "../../Types/User/User";
+import { IModule } from "../../Types/Modules/Module";
 export class UserModuleService {
   // ➤ Find all user modules
   static async findAllUserModules(): Promise<IUserModules[]> {
@@ -35,7 +35,7 @@ static async getUserWithRoleAndModules(userId: string){
 
   
   return {
-    ...user.toObject(),
+    ...user,
     roleDetails: role,
     modules,
   };

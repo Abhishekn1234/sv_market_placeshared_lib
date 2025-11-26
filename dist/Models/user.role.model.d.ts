@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { UserRole } from "../Types/Role";
+import { UserRole } from "../Types/Roles/UserRole";
 export declare const Role: mongoose.Model<UserRole, {}, {}, {}, mongoose.Document<unknown, {}, UserRole, {}, {}> & UserRole & Required<{
     _id: mongoose.Types.ObjectId;
 }> & {

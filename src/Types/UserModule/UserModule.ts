@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
-import { UserRole } from "./Role";
-import { IModule } from "./Module";
+import { UserRole } from "../Roles/UserRole";
+import { IModule } from "../Modules/Module";
 import mongoose from "mongoose";
 interface IUserModulesWithId extends IUserModules {
   _id: mongoose.Types.ObjectId;
@@ -8,5 +8,5 @@ interface IUserModulesWithId extends IUserModules {
 
 export interface IUserModules extends Document {
   user_group_id: Types.ObjectId | UserRole;
-  module_id: Types.ObjectId[] | IModule[];  // <-- ARRAY FIX
+  module_id: Types.ObjectId[] | IModule[];  
 }

@@ -1,11 +1,13 @@
-import { User, IUser } from "../../Models/user.model";
+import { User, } from "../../Models/user.model";
+import { IUser } from "../../Types/User/User";
 import bcrypt from "bcryptjs";
 import { Role } from "../../Models/user.role.model";
-import { Types } from "mongoose";
+
 import { UserModules } from "../../Models/user_modules.model";
 import { Module } from "../../Models/module.model";
+import { IUserRepo } from "../../Types/User/userRepotypes";
 
-export const userRepo = {
+export const  userRepo: IUserRepo= {
   // -------------------------
   // Existing Methods
   // -------------------------

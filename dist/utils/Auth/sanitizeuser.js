@@ -1,33 +1,6 @@
 "use strict";
-// export const sanitizeUser = (user: any) => {
-//   const { 
-//     password, 
-//     otp, 
-//     otpExpire,
-//     __v, 
-//     refreshToken, 
-//     accessToken, 
-//     resetPasswordToken,
-//     resetPasswordExpires,
-//     resetPasswordExpire,
-//     emailVerificationToken,
-//     LoginDate,
-//     LoginTime,
-//     lastLoginDate,
-//     lastLoginTime,
-//     LogoutDate,
-//     LogoutTime,
-//     logoutDate,
-//     logoutTime,
-//     duration,
-//     createdAt,
-//     updatedAt,
-//     ...rest 
-//   } = user;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.strongPasswordRegex = exports.passwordRegex = exports.phoneRegex = exports.emailRegex = exports.validateRegistrationInputs = void 0;
-//   return rest;
-// };
 const validateRegistrationInputs = (email, phone, password) => {
     if (!exports.emailRegex.test(email))
         throw new Error("Invalid email format");

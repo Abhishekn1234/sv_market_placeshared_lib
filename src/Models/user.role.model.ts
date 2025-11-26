@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-import { UserRole } from "../Types/Role";
+import { UserRole } from "../Types/Roles/UserRole";
 
 const roleSchema = new Schema<UserRole>({
   name: {

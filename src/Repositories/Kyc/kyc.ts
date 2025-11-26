@@ -1,9 +1,15 @@
-import { KYC, IKYCDocument } from "../../Models/kyc.model";
+import { KYC} from "../../Models/kyc.model";
+import { IKYCRepo } from "../../Types/Kyc/kycrepo";
+import { getLatestKyc } from "./kychelper";
 
-export const KYCRepo = {
+
+export const KYCRepo:IKYCRepo = {
   findByUserId(userId: string) {
     return KYC.find({ userId }).sort({ createdAt: -1 }).lean();
   },
+ fetchKycDocuments (userId: string)  {
+  return getLatestKyc(userId);
+},
 
   findOneByUser(userId: string) {
     return KYC.findOne({ userId });

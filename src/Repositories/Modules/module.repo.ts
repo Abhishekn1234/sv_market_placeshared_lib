@@ -1,6 +1,6 @@
 import {  Module } from "../../Models/module.model";
 
-import { IModule } from "../../Types/Module";
+import { IModule } from "../../Types/Modules/Module";
 
 
 export class Modulefunctions{

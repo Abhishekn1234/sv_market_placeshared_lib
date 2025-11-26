@@ -1,6 +1,7 @@
 import { KYC } from "../../Models/kyc.model";
 import { generateAccessToken, generateRefreshToken } from "../../utils/Auth/token";
 import { emailRegex,phoneRegex,passwordRegex } from "../../utils/Auth/regexvalidation";
+import { KycLean } from "../../Types/Kyc/kyclean";
 
 export const validateIdentifier = (identifier: string) => {
   if (!emailRegex.test(identifier) && !phoneRegex.test(identifier))
@@ -25,11 +26,11 @@ export const sanitizeUser = (userObj: any) => {
   return userObj;
 };
 
-export const getLatestKyc = async (userId: string) => {
+export const getLatestKyc = async (userId: string): Promise<KycLean | null> => {
   return await KYC.findOne({ userId })
     .sort({ createdAt: -1 })
     .select("-__v -createdAt -updatedAt -overallStatus -userId")
-    .lean();
+    .lean<KycLean>();
 };
 
 

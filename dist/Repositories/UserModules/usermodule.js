@@ -29,7 +29,7 @@ class UserModuleService {
             modules = await module_model_1.Module.find({ _id: { $in: userModules.module_id } });
         }
         return {
-            ...user.toObject(),
+            ...user,
             roleDetails: role,
             modules,
         };

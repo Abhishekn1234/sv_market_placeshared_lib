@@ -1,45 +1,8 @@
 import mongoose, { Document, ObjectId, Schema, Types } from "mongoose";
 import bcrypt from "bcryptjs";
-
-import { UserRole } from "../Types/Role";
-import { KYCSTATUS } from "../Types/Role";
-export interface IUser extends Document {
-  
-  fullName: string;
-  email: string;
-  phone: string;
-  createdAt:Date;
-  updatedAt:Date;
-  password: string;
-  bio:string;
- 
-  user_role?: Types.ObjectId | null;  
-  isVerified: boolean;
-  kycStatus: KYCSTATUS;
-  nationality: string;
-  dob: Date;
-  profilePictureUrl:string;
-profilePicturePublicId: string;
-  address: string;
-  social?: { provider?: string; socialId?: string };
-  matchPassword(password: string): Promise<boolean>;
-  otp?: string;
-  otpExpire?: Date;
-  emailVerificationToken?: string;
-   __v?: number;
-   
+import { IUser } from "../Types/User/User";
 
 
-
-  resetPasswordToken?: string;
-  resetPasswordExpire?: Date;
-  LogoutTime:string;
-  LogoutDate:Date;
-  LoginTime:string;
-  LoginDate:Date;
-  duration:string;
-
-}
 
 const userSchema = new Schema<IUser>(
   {

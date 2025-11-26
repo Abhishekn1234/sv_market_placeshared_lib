@@ -1,31 +1,3 @@
-// export const sanitizeUser = (user: any) => {
-//   const { 
-//     password, 
-//     otp, 
-//     otpExpire,
-//     __v, 
-//     refreshToken, 
-//     accessToken, 
-//     resetPasswordToken,
-//     resetPasswordExpires,
-//     resetPasswordExpire,
-//     emailVerificationToken,
-//     LoginDate,
-//     LoginTime,
-//     lastLoginDate,
-//     lastLoginTime,
-//     LogoutDate,
-//     LogoutTime,
-//     logoutDate,
-//     logoutTime,
-//     duration,
-//     createdAt,
-//     updatedAt,
-//     ...rest 
-//   } = user;
-
-//   return rest;
-// };
 export const validateRegistrationInputs = (
   email: string,
   phone: string,

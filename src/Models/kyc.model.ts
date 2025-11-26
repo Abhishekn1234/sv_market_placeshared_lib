@@ -1,22 +1,6 @@
 import mongoose, { Document, Schema } from "mongoose";
-
-/* ============================================================
-   INDIVIDUAL DOCUMENT MODEL
-   ============================================================ */
-
-export interface IKYCDocument {
-  _id?: string;
-  category: string;
-  documentType:string;
-   fileName: string;
-   publicId: string,
-  filePath: string;
-  fileType: string;
-  uploadedAt?: Date;
- 
-  remarks?: string;
-}
-
+import { IKYCDocument } from "../Types/Kyc/Kycdocument";
+import { IKYC } from "../Types/Kyc/Kyc";
 const kycDocumentSchema = new Schema<IKYCDocument>(
   {
     category: {
@@ -55,38 +39,7 @@ const kycDocumentSchema = new Schema<IKYCDocument>(
   { _id: false }
 );
 
-/* ============================================================
-   MAIN KYC MODEL
-   ============================================================ */
 
-export interface IKYC extends Document {
-  userId: mongoose.Schema.Types.ObjectId;
-
-  nationality: "Saudi" | "GCC" | "Other";
-
-  address: {
-    street?: string;
-    city?: string;
-    region?: string;
-    postalCode?: string;
-  };
-
-  userInfoSnapshot?: {
-    fullName?: string;
-    email?: string;
-    phone?: string;
-    bio?: string;
-    address:string;
-    profilePictureUrl:string;
-  };
-
-  documents: IKYCDocument[];
-
-  overallStatus: "pending" | "verified" | "rejected" | "approved" |"not_submitted" |"submitted";
-
-  remarks?: string;
-  emailVerificationToken?: string;
-}
 
 const kycSchema = new Schema<IKYC>(
   {

@@ -1,0 +1,1 @@
+{"version":3,"file":"userRoleResponse.d.ts","sourceRoot":"","sources":["../../../src/Types/Roles/userRoleResponse.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,oBAAoB,EAAE,MAAM,kCAAkC,CAAC;AAExE,MAAM,WAAW,gBAAgB;IAC/B,GAAG,EAAE,MAAM,CAAC;IACZ,IAAI,EAAE,MAAM,CAAC;IACb,OAAO,EAAE,oBAAoB,EAAE,CAAC;CACjC"}

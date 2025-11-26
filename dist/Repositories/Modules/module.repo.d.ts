@@ -1,4 +1,4 @@
-import { IModule } from "../../Types/Module";
+import { IModule } from "../../Types/Modules/Module";
 export declare class Modulefunctions {
     static addModule(module: string, modulelanguagekey: string, parent: string, sort: number): Promise<import("mongoose").Document<unknown, {}, IModule, {}, {}> & IModule & Required<{
         _id: import("mongoose").Types.ObjectId;

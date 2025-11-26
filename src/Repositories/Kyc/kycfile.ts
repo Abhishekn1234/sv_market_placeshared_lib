@@ -1,7 +1,8 @@
-import { IUser } from "../../Models/user.model";
-import { KYCFileType, KYCFileCategory } from "../../Types/kyc";
+import { IUser } from "../../Types/User/User";
+import { KYCFileType } from "../../Types/Kyc/kycfiletype";
+import { KYCFileCategory } from "../../Types/Kyc/kycfilecategory";
 import { Express } from "express";
-import { IKYCDocument } from "../../Models/kyc.model";
+import { IKYCDocument } from "../../Types/Kyc/Kycdocument";
 
 export const KYCMapper = {
   mapUser(user: IUser | any) {

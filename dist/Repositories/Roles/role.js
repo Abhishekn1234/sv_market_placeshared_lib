@@ -12,7 +12,30 @@ class Rolefunctions {
         return await user_role_model_1.Role.findByIdAndDelete(id);
     }
     static async fetchRoleById(id) {
-        return await user_role_model_1.Role.findById(id);
+        // 1. Fetch the role
+        const role = await user_role_model_1.Role.findById(id).lean();
+        if (!role)
+            return null;
+        // 2. Fetch mapping entry from UserModules
+        const userModulesEntry = await user_modules_model_1.UserModules.findOne({
+            user_group_id: role._id,
+        }).lean();
+        let modules = [];
+        // 3. If modules exist, fetch full module docs
+        if (userModulesEntry?.module_id?.length) {
+            const moduleIds = userModulesEntry.module_id;
+            modules = await module_model_1.Module.find({
+                _id: { $in: moduleIds },
+            })
+                .lean()
+                .exec();
+        }
+        // 4. Return unified role + modules result
+        return {
+            _id: role._id,
+            name: role.name,
+            modules,
+        };
     }
     static async fetchByNames(name) {
         return await user_role_model_1.Role.findOne({ name });

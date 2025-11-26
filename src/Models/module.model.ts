@@ -1,5 +1,5 @@
-import mongoose,{ Document,Types,Schema,ObjectId } from "mongoose";
-import { IModule } from "../Types/Module";
+import mongoose,{ Schema } from "mongoose";
+import { IModule } from "../Types/Modules/Module";
 
 
 const moduleSchema =new Schema<IModule>({

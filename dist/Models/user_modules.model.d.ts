@@ -1,5 +1,5 @@
 import mongoose, { Types } from "mongoose";
-import { IUserModules } from "../Types/UserModule";
+import { IUserModules } from "../Types/UserModule/UserModule";
 export declare const UserModules: mongoose.Model<IUserModules, {}, {}, {}, mongoose.Document<unknown, {}, IUserModules, {}, {}> & IUserModules & {
     _id: Types.ObjectId;
 } & {

@@ -2,9 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.KYCRepo = void 0;
 const kyc_model_1 = require("../../Models/kyc.model");
+const kychelper_1 = require("./kychelper");
 exports.KYCRepo = {
     findByUserId(userId) {
         return kyc_model_1.KYC.find({ userId }).sort({ createdAt: -1 }).lean();
+    },
+    fetchKycDocuments(userId) {
+        return (0, kychelper_1.getLatestKyc)(userId);
     },
     findOneByUser(userId) {
         return kyc_model_1.KYC.findOne({ userId });
