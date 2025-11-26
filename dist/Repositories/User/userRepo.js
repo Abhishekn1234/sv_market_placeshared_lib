@@ -62,6 +62,7 @@ exports.userRepo = {
             $or: [{ email }, { phone }],
         });
     },
+    // In userRepo
     async createUser(data) {
         return user_model_1.User.create(data); // actual Mongoose document
     },
