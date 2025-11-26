@@ -155,7 +155,8 @@ exports.userRepo = {
     },
     // Create user (already exists, but adding alias if needed)
     async createNewUser(data) {
-        return user_model_1.User.create(data);
+        const user = await user_model_1.User.create(data);
+        return user.toObject(); // Convert to plain object
     },
     // Update user by ID
     async updateUser(id, payload) {

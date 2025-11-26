@@ -205,9 +205,10 @@ async getAllUsers() {
 
 
   // Create user (already exists, but adding alias if needed)
-  async createNewUser(data: IUser): Promise<IUser> {
-     return User.create(data);
-  },
+async createNewUser  (data: IUser)  {
+  const user = await User.create(data);
+  return user.toObject(); // Convert to plain object
+},
 
   // Update user by ID
   async updateUser  (id: string, payload: Partial<IUser>) {
