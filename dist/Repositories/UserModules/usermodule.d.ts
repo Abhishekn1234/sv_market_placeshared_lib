@@ -10,6 +10,7 @@ export declare class UserModuleService {
             __v: number;
         };
         modules: IModule[];
+        _id: Types.ObjectId;
         fullName: string;
         email: string;
         phone: string;

@@ -1,6 +1,6 @@
 import mongoose, { Types } from "mongoose";
 import { IUser } from "../Types/User/User";
-export declare const User: mongoose.Model<IUser, {}, {}, {}, mongoose.Document<unknown, {}, IUser, {}, {}> & IUser & {
+export declare const User: mongoose.Model<IUser, {}, {}, {}, mongoose.Document<unknown, {}, IUser, {}, {}> & IUser & Required<{
     _id: Types.ObjectId;
-}, any>;
+}>, any>;
 //# sourceMappingURL=user.model.d.ts.map

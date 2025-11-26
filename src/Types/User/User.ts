@@ -2,7 +2,7 @@ import { Types } from "mongoose";
 import { KYCSTATUS } from "../Kyc/KycStatus";
 
 export interface IUser extends Document {
-  
+  _id: Types.ObjectId;
   fullName: string;
   email: string;
   phone: string;
