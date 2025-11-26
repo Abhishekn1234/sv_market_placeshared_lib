@@ -137,6 +137,19 @@ exports.userRepo = {
         console.log(user);
         return user;
     },
+    async getsearch(search) {
+        if (!search || search.trim() === "") {
+            return []; // or throw new Error("Search string is required");
+        }
+        const users = await user_model_1.User.find({
+            $or: [
+                { name: { $regex: search, $options: "i" } },
+                { email: { $regex: search, $options: "i" } },
+                { phone: { $regex: search, $options: "i" } },
+            ],
+        });
+        return users;
+    },
     // Create user (already exists, but adding alias if needed)
     async createNewUser(data) {
         return user_model_1.User.create(data);

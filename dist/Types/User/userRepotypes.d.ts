@@ -22,6 +22,7 @@ export interface IUserRepo {
         totalUsers: number;
         totalItems: number;
     }>;
+    getsearch(search: string): Promise<IUser[]>;
     getUserById(id: string): Promise<IUser | null>;
     createNewUser(data: Partial<IUser>): Promise<IUser>;
     updateUser(id: string, data: Partial<IUser>): Promise<IUser | null>;
