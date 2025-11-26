@@ -150,14 +150,7 @@ exports.userRepo = {
         })
             // .populate("documents")   // populate KYC documents
             .populate("user_role"); // populate role
-        const usersWithRoles = users.map(user => {
-            const u = user.toObject();
-            return {
-                ...u,
-                roles: u.user_role ? [u.user_role] : [],
-            };
-        });
-        return usersWithRoles;
+        return users;
     },
     // Create user (already exists, but adding alias if needed)
     async createNewUser(data) {
