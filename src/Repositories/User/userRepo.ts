@@ -80,9 +80,9 @@ export const  userRepo: IUserRepo= {
     });
   },
 
-  async createUser(data: Partial<IUser>) {
-    return User.create(data);
-  },
+  async createUser(data: IUser): Promise<Document & IUser> {
+  return User.create(data); // actual Mongoose document
+},
 
   async updateUserById(id: string, update: Partial<IUser>) {
     return User.findByIdAndUpdate(id, update, { new: true });

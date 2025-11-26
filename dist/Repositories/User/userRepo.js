@@ -63,7 +63,7 @@ exports.userRepo = {
         });
     },
     async createUser(data) {
-        return user_model_1.User.create(data);
+        return user_model_1.User.create(data); // actual Mongoose document
     },
     async updateUserById(id, update) {
         return user_model_1.User.findByIdAndUpdate(id, update, { new: true });
