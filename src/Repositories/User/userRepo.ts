@@ -195,7 +195,7 @@ async getAllUsers() {
       { phone: { $regex: search, $options: "i" } },
     ],
   })
-    // .populate("documents")   // populate KYC documents
+    .populate("documents")   // populate KYC documents
     .populate("user_role");  // populate role
      
   
