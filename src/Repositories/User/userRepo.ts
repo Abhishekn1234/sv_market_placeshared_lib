@@ -184,7 +184,7 @@ async getAllUsers() {
     return user;
     
   },
-  async getsearch (search: string): Promise<IUser[]>{
+  async getsearch  (search: string): Promise<IUser[]>  {
   if (!search || search.trim() === "") return [];
 
   // Search users and populate KYC documents and role
@@ -198,7 +198,7 @@ async getAllUsers() {
     .populate("documents")   // populate KYC documents
     .populate("user_role");  // populate role
 
-  // Optional: if you want a "roles" array for consistency
+  
   const usersWithRoles = users.map(user => {
     const u = user.toObject();
     return {
