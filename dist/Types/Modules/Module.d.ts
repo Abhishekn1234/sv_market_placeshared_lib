@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 export interface IModule {
-    _id: Types.ObjectId;
+    _id: Types.ObjectId | string;
     module: string;
     modulelanguagekey: string;
     sort: number;
