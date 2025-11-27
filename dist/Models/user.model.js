@@ -39,42 +39,46 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
+// Schema
 const userSchema = new mongoose_1.Schema({
     fullName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     phone: { type: String, required: true, unique: true },
-    password: { type: String },
-    LoginDate: { type: Date },
-    LoginTime: { type: String },
-    LogoutDate: { type: Date },
-    LogoutTime: { type: String },
-    duration: { type: String },
-    address: { type: String },
+    password: { type: String, required: true },
+    bio: { type: String, default: "" },
     user_role: { type: mongoose_1.Types.ObjectId, ref: "UserRole", default: null },
     isVerified: { type: Boolean, default: false },
-    profilePictureUrl: { type: String },
-    profilePicturePublicId: { type: String },
-    nationality: { type: String, enum: ["Saudi", "GCC", "Other"] },
-    dob: { type: Date },
-    social: { provider: String, socialId: String },
     kycStatus: {
         type: String,
         enum: ["pending", "verified", "rejected", "not_submitted", "submitted"],
         default: "not_submitted",
     },
+    nationality: { type: String },
+    dob: { type: Date },
+    profilePictureUrl: { type: String, default: "" },
+    profilePicturePublicId: { type: String, default: "" },
+    address: { type: String, default: "" },
+    social: { provider: String, socialId: String },
     otp: String,
     otpExpire: Date,
     emailVerificationToken: String,
     resetPasswordToken: String,
     resetPasswordExpire: Date,
+    LoginTime: String,
+    LoginDate: Date,
+    LogoutTime: String,
+    LogoutDate: Date,
+    duration: String,
 }, { timestamps: true });
-userSchema.pre("save", async function (next) {
+// Hash password before save
+userSchema.pre("save", async function () {
     if (!this.isModified("password"))
-        return next();
+        return;
     this.password = await bcryptjs_1.default.hash(this.password, 10);
-    next();
 });
+// Instance method
 userSchema.methods.matchPassword = async function (password) {
     return bcryptjs_1.default.compare(password, this.password);
 };
+// Export model
 exports.User = mongoose_1.default.model("User", userSchema);

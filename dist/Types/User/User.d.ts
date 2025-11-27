@@ -7,8 +7,6 @@ export interface IUser {
     fullName: string;
     email: string;
     phone: string;
-    createdAt: Date;
-    updatedAt: Date;
     password: string;
     bio: string;
     documents?: IKYCDocument[];
@@ -28,13 +26,15 @@ export interface IUser {
     otp?: string;
     otpExpire?: Date;
     emailVerificationToken?: string;
-    __v?: number;
     resetPasswordToken?: string;
     resetPasswordExpire?: Date;
-    LogoutTime: string;
-    LogoutDate: Date;
-    LoginTime: string;
-    LoginDate: Date;
-    duration: string;
+    LoginTime?: string;
+    LoginDate?: Date;
+    LogoutTime?: string;
+    LogoutDate?: Date;
+    duration?: string;
+    createdAt: Date;
+    updatedAt: Date;
+    __v?: number;
 }
 //# sourceMappingURL=User.d.ts.map
