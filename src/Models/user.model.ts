@@ -1,60 +1,60 @@
-import mongoose, { Document, ObjectId, Schema, Types } from "mongoose";
+import mongoose, { Schema, Types } from "mongoose";
 import bcrypt from "bcryptjs";
 import { IUser } from "../Types/User/User";
 
+// Schema methods interface
+export interface IUserMethods {
+  matchPassword(password: string): Promise<boolean>;
+}
 
-
-const userSchema = new Schema<IUser>(
+// Schema
+const userSchema = new Schema<IUser, {}, IUserMethods>(
   {
     fullName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     phone: { type: String, required: true, unique: true },
-    password: { type: String},
-     LoginDate:{type:Date},
-     LoginTime:{type:String},
-     LogoutDate:{type:Date},
-     LogoutTime:{type:String},
-     duration:{type:String},
-    
-    address: { type: String },
-
-     
+    password: { type: String, required: true },
+    bio: { type: String, default: "" },
     user_role: { type: Types.ObjectId, ref: "UserRole", default: null },
     isVerified: { type: Boolean, default: false },
-    profilePictureUrl:{type:String},
-    profilePicturePublicId:{type: String},
-    nationality: { type: String, enum: ["Saudi", "GCC", "Other"] },
-    dob: { type: Date },
-
-    social: { provider: String, socialId: String },
-
     kycStatus: {
       type: String,
       enum: ["pending", "verified", "rejected", "not_submitted", "submitted"],
       default: "not_submitted",
     },
-
+    nationality: { type: String },
+    dob: { type: Date },
+    profilePictureUrl: { type: String, default: "" },
+    profilePicturePublicId: { type: String, default: "" },
+    address: { type: String, default: "" },
+    social: { provider: String, socialId: String },
     otp: String,
     otpExpire: Date,
-
     emailVerificationToken: String,
-    
-
     resetPasswordToken: String,
     resetPasswordExpire: Date,
-    
+    LoginTime: String,
+    LoginDate: Date,
+    LogoutTime: String,
+    LogoutDate: Date,
+    duration: String,
   },
   { timestamps: true }
 );
 
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
+// Hash password before save
+userSchema.pre("save", async function () {
+  if (!this.isModified("password")) return;
   this.password = await bcrypt.hash(this.password, 10);
-  next();
 });
 
+// Instance method
 userSchema.methods.matchPassword = async function (password: string) {
   return bcrypt.compare(password, this.password);
 };
 
-export const User = mongoose.model<IUser>("User", userSchema);
+// Export model
+export const User = mongoose.model<IUser, mongoose.Model<IUser, {}, IUserMethods>>(
+  "User",
+  userSchema
+);
