@@ -38,11 +38,11 @@ export const userRepo: IUserRepo = {
   },
 
   async findUserByEmail(email: string) {
-    return User.findOne({ email }).lean();
+    return User.findOne({ email });
   },
 
   async findUserByPhone(phone: string) {
-    return User.findOne({ phone }).lean();
+    return User.findOne({ phone });
   },
 
   async findUserById(userId: string) {

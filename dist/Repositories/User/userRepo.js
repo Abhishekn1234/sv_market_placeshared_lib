@@ -32,10 +32,10 @@ exports.userRepo = {
         return user_model_1.User.findOne({ phone, _id: { $ne: excludeUserId } }).lean();
     },
     async findUserByEmail(email) {
-        return user_model_1.User.findOne({ email }).lean();
+        return user_model_1.User.findOne({ email });
     },
     async findUserByPhone(phone) {
-        return user_model_1.User.findOne({ phone }).lean();
+        return user_model_1.User.findOne({ phone });
     },
     async findUserById(userId) {
         return user_model_1.User.findById(userId).lean();
