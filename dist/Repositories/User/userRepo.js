@@ -11,159 +11,132 @@ const user_modules_model_1 = require("../../Models/user_modules.model");
 const module_model_1 = require("../../Models/module.model");
 exports.userRepo = {
     // -------------------------
-    // Existing Methods
+    // Find methods (always JSON)
     // -------------------------
     async findById(id) {
-        return user_model_1.User.findById(id);
+        return user_model_1.User.findById(id).lean();
     },
     async verifyUser(userId) {
-        return user_model_1.User.findByIdAndUpdate(userId, { verified: true }, { new: true });
+        return user_model_1.User.findByIdAndUpdate(userId, { verified: true }, { new: true }).lean();
     },
-    // Optionally: Unverify a user
     async unverifyUser(userId) {
-        return user_model_1.User.findByIdAndUpdate(userId, { verified: false }, { new: true });
+        return user_model_1.User.findByIdAndUpdate(userId, { verified: false }, { new: true }).lean();
     },
     async findUserByEmailOrPhone(email, phone) {
-        return user_model_1.User.findOne({
-            $or: [{ email }, { phone }],
-        });
+        return user_model_1.User.findOne({ $or: [{ email }, { phone }] }).lean();
     },
     async findUserByEmailExcludingId(email, excludeUserId) {
-        return user_model_1.User.findOne({
-            email,
-            _id: { $ne: excludeUserId },
-        });
+        return user_model_1.User.findOne({ email, _id: { $ne: excludeUserId } }).lean();
     },
     async findUserByPhoneExcludingId(phone, excludeUserId) {
-        return user_model_1.User.findOne({
-            phone,
-            _id: { $ne: excludeUserId },
-        });
+        return user_model_1.User.findOne({ phone, _id: { $ne: excludeUserId } }).lean();
     },
     async findUserByEmail(email) {
-        return user_model_1.User.findOne({ email });
+        return user_model_1.User.findOne({ email }).lean();
     },
     async findUserByPhone(phone) {
-        return user_model_1.User.findOne({ phone });
+        return user_model_1.User.findOne({ phone }).lean();
     },
     async findUserById(userId) {
-        return user_model_1.User.findById(userId);
+        return user_model_1.User.findById(userId).lean();
     },
     async findByIdentifier(identifier) {
         return user_model_1.User.findOne({
             $or: [{ email: identifier }, { phone: identifier }],
-        });
+        }).lean();
     },
     async findBySocialId(socialId) {
-        return user_model_1.User.findOne({ socialId });
+        return user_model_1.User.findOne({ socialId }).lean();
     },
     async checkExistingUser(email, phone) {
-        return user_model_1.User.findOne({
-            $or: [{ email }, { phone }],
-        });
+        return user_model_1.User.findOne({ $or: [{ email }, { phone }] }).lean();
     },
-    // In userRepo
+    // -------------------------
+    // Create user
+    // -------------------------
     async createUser(data) {
-        return user_model_1.User.create(data); // actual Mongoose document
+        const user = await user_model_1.User.create(data);
+        return user.toObject();
     },
+    // Alias
+    async createNewUser(data) {
+        const user = await user_model_1.User.create(data);
+        return user.toObject();
+    },
+    // -------------------------
+    // Update user
+    // -------------------------
     async updateUserById(id, update) {
-        return user_model_1.User.findByIdAndUpdate(id, update, { new: true });
+        return user_model_1.User.findByIdAndUpdate(id, update, { new: true }).lean();
     },
     updateKYCStatus(userId, status) {
-        return user_model_1.User.findByIdAndUpdate(userId, { kycStatus: status }, { new: true });
+        return user_model_1.User.findByIdAndUpdate(userId, { kycStatus: status }, { new: true }).lean();
     },
     findByIdLean(userId) {
         return user_model_1.User.findById(userId).lean();
     },
     async changePassword(id, newPassword) {
-        const hashedPassword = await bcryptjs_1.default.hash(newPassword, 10);
-        return user_model_1.User.findByIdAndUpdate(id, { password: hashedPassword }, { new: true });
+        const hashed = await bcryptjs_1.default.hash(newPassword, 10);
+        return user_model_1.User.findByIdAndUpdate(id, { password: hashed }, { new: true }).lean();
     },
     // -------------------------
-    // ✔ Added CRUD Functionality
+    // Get ALL Users with Roles + Modules
     // -------------------------
-    // Get all users
     async getAllUsers() {
-        // 1️⃣ Fetch all users
         const users = await user_model_1.User.find().sort({ createdAt: -1 }).lean();
-        // 2️⃣ Get all unique role IDs from users (excluding null)
-        const roleIds = users
-            .map(u => u.user_role)
-            .filter(Boolean)
-            .map(id => id);
-        // 3️⃣ Fetch ALL roles (not only user roles)
         const roles = await user_role_model_1.Role.find().lean();
-        // 4️⃣ Fetch all UserModules (for all roles)
-        const userModulesList = await user_modules_model_1.UserModules.find().lean();
-        // 5️⃣ Collect all module IDs
-        const moduleIds = userModulesList.flatMap(um => (um.module_id ?? []).map((m) => m.toString()));
-        // 6️⃣ Fetch all modules
+        const userModules = await user_modules_model_1.UserModules.find().lean();
+        const moduleIds = userModules.flatMap((um) => (um.module_id ?? []).map((m) => m.toString()));
         const modules = await module_model_1.Module.find({ _id: { $in: moduleIds } }).lean();
-        // 7️⃣ Build modules map
         const modulesMap = new Map();
-        modules.forEach(mod => modulesMap.set(mod._id.toString(), mod));
-        // 8️⃣ Build roleId → modules[] map
+        modules.forEach((m) => modulesMap.set(m._id.toString(), m));
         const roleModulesMap = new Map();
-        userModulesList.forEach(um => {
+        userModules.forEach((um) => {
             const mods = (um.module_id || [])
                 .map((m) => modulesMap.get(m.toString()))
                 .filter(Boolean);
             roleModulesMap.set(um.user_group_id.toString(), mods);
         });
-        // 9️⃣ Build roleId → roleWithModules map
         const rolesMap = new Map();
-        roles.forEach(role => {
-            rolesMap.set(role._id.toString(), {
-                ...role,
-                modules: roleModulesMap.get(role._id.toString()) || []
-            });
-        });
-        // 🔟 Inject role + modules into each user
-        const usersWithRoles = users.map(user => {
-            const roleId = user.user_role?.toString();
-            return {
-                ...user,
-                role: roleId ? rolesMap.get(roleId) : null
-            };
-        });
+        roles.forEach((role) => rolesMap.set(role._id.toString(), {
+            ...role,
+            modules: roleModulesMap.get(role._id.toString()) || [],
+        }));
+        const usersWithRoles = users.map((user) => ({
+            ...user,
+            role: user.user_role ? rolesMap.get(user.user_role.toString()) : null,
+        }));
         return {
             users: usersWithRoles,
             totalUsers: users.length,
-            totalItems: users.length
+            totalItems: users.length,
         };
     },
-    // Get user by ID
-    async getUserById(id) {
-        const user = await user_model_1.User.findById(id);
-        console.log(user);
-        return user;
-    },
+    // -------------------------
+    // Search users
+    // -------------------------
     async getsearch(search) {
-        if (!search || search.trim() === "")
+        if (!search.trim())
             return [];
-        // Search users and populate KYC documents and role
-        const users = await user_model_1.User.find({
+        return user_model_1.User.find({
             $or: [
                 { fullName: { $regex: search, $options: "i" } },
                 { email: { $regex: search, $options: "i" } },
                 { phone: { $regex: search, $options: "i" } },
             ],
         })
-            .populate("documents") // populate KYC documents
-            .populate("user_role"); // populate role
-        return users;
+            .lean();
     },
-    // Create user (already exists, but adding alias if needed)
-    async createNewUser(data) {
-        const user = await user_model_1.User.create(data);
-        return user.toObject(); // Convert to plain object
-    },
-    // Update user by ID
-    async updateUser(id, payload) {
-        return await user_model_1.User.findByIdAndUpdate(id, payload, { new: true }).lean();
-    },
-    // Delete user by ID
+    // -------------------------
+    // Delete user
+    // -------------------------
     async deleteUser(id) {
-        return user_model_1.User.findByIdAndDelete(id);
+        return user_model_1.User.findByIdAndDelete(id).lean();
+    },
+    async getUserById(id) {
+        return user_model_1.User.findById(id).lean();
+    },
+    async updateUser(id, data) {
+        return user_model_1.User.findByIdAndUpdate(id, data, { new: true }).lean();
     },
 };
