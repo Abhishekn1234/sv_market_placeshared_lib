@@ -44,6 +44,7 @@ export declare class UserModuleService {
         LoginDate: Date;
         duration: string;
     }>;
+    static createOrUpdateUserModule(user_group_id: string, module_id: string, dataToUpdate?: Partial<IUserModules>): Promise<IUserModules>;
     static createUserModule(user_group_id: string, module_id: string): Promise<IUserModules>;
     static findUserModuleById(id: string): Promise<IUserModules | null>;
     static findUserModuleByGroupAndModule(user_group_id: string, module_id: string): Promise<IUserModules | null>;

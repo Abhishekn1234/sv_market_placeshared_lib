@@ -35,6 +35,14 @@ class UserModuleService {
         };
     }
     ;
+    static async createOrUpdateUserModule(user_group_id, module_id, dataToUpdate // optional fields to update
+    ) {
+        return await user_modules_model_1.UserModules.findOneAndUpdate({ user_group_id, module_id }, // find existing
+        {
+            $set: dataToUpdate || {} // update fields only if needed
+        }, { new: true, upsert: true } // if not exist → create
+        );
+    }
     // ➤ Create user module
     static async createUserModule(user_group_id, module_id) {
         try {

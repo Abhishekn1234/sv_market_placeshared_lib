@@ -40,6 +40,21 @@ static async getUserWithRoleAndModules(userId: string){
     modules,
   };
 };
+static async createOrUpdateUserModule(
+  user_group_id: string,
+  module_id: string,
+  dataToUpdate?: Partial<IUserModules>  // optional fields to update
+): Promise<IUserModules> {
+
+  return await UserModules.findOneAndUpdate(
+    { user_group_id, module_id },   // find existing
+    { 
+      $set: dataToUpdate || {}      // update fields only if needed
+    },
+    { new: true, upsert: true }     // if not exist → create
+  );
+}
+
 
   // ➤ Create user module
   static async createUserModule(
