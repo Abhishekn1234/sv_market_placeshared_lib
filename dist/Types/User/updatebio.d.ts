@@ -7,5 +7,6 @@ export interface UpdateBioData {
     address?: string;
     profilePictureUrl?: string;
     nationality?: string;
+    documents?: string[];
 }
 //# sourceMappingURL=updatebio.d.ts.map
