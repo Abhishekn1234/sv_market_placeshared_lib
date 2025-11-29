@@ -47,7 +47,12 @@ const userSchema = new mongoose_1.Schema({
     password: { type: String, required: true },
     bio: { type: String, default: "" },
     user_role: { type: mongoose_1.Types.ObjectId, ref: "UserRole", default: null },
-    documents: [{ type: mongoose_1.Types.ObjectId, ref: "KYC", default: null }],
+    documents: [
+        {
+            type: mongoose_1.Types.ObjectId,
+            ref: "KYC"
+        }
+    ],
     isVerified: { type: Boolean, default: false },
     kycStatus: {
         type: String,
