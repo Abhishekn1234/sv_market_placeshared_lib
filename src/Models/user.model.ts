@@ -16,12 +16,11 @@ const userSchema = new Schema<IUser, {}, IUserMethods>(
     password: { type: String, required: true },
     bio: { type: String, default: "" },
     user_role: { type: Types.ObjectId, ref: "UserRole", default: null },
-   documents: [
-  {
-    type: Types.ObjectId,
-    ref: "KYC"
-  }
-],
+  documents: {
+  type: [mongoose.Schema.Types.ObjectId],
+  ref: "Kyc",
+  default: []
+},
     isVerified: { type: Boolean, default: false },
     kycStatus: {
       type: String,
