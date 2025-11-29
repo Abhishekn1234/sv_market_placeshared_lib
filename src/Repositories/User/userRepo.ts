@@ -2,6 +2,7 @@ import { User, } from "../../Models/user.model";
 import { IUser } from "../../Types/User/User";
 import bcrypt from "bcryptjs";
 import { Role } from "../../Models/user.role.model";
+import { UpdateQuery } from "mongoose";
 
 import { UserModules } from "../../Models/user_modules.model";
 import { Module } from "../../Models/module.model";
@@ -70,12 +71,11 @@ export const userRepo: IUserRepo = {
     const user = await User.create(data);
     return user.toObject();
   },
- async updateKycdocuments(id: string, data: any): Promise<IUser | null> {
-  return User.findByIdAndUpdate(
-    id,
-    data,                 
-    { new: true }
-  );
+ async updateKycdocuments(
+  id: string,
+  data: UpdateQuery<IUser>
+): Promise<IUser | null> {
+  return User.findByIdAndUpdate(id, data, { new: true });
 },
 
 
