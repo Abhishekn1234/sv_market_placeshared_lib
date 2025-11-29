@@ -16,6 +16,7 @@ const userSchema = new Schema<IUser, {}, IUserMethods>(
     password: { type: String, required: true },
     bio: { type: String, default: "" },
     user_role: { type: Types.ObjectId, ref: "UserRole", default: null },
+    documents: [{ type: Types.ObjectId, ref: "KYC",default:null }],
     isVerified: { type: Boolean, default: false },
     kycStatus: {
       type: String,

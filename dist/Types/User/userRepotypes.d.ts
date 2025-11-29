@@ -3,6 +3,7 @@ export interface IUserRepo {
     findById(id: string): Promise<IUser | null>;
     verifyUser(userId: string): Promise<IUser | null>;
     unverifyUser(userId: string): Promise<IUser | null>;
+    updateKycdocuments(userId: string, data: Partial<IUser>): Promise<IUser | null>;
     findUserByEmailOrPhone(email: string, phone: string): Promise<IUser | null>;
     findUserByEmailExcludingId(email: string, excludeUserId: string): Promise<IUser | null>;
     findUserByPhoneExcludingId(phone: string, excludeUserId: string): Promise<IUser | null>;

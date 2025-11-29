@@ -70,6 +70,17 @@ export const userRepo: IUserRepo = {
     const user = await User.create(data);
     return user.toObject();
   },
+ async updateKycdocuments(
+  id: string,
+  data: Partial<IUser>
+): Promise<IUser | null> {
+  return User.findByIdAndUpdate(
+    id,
+    { $set: data },
+    { new: true }
+  );
+},
+
 
   // Alias
   async createNewUser(data: IUser) {

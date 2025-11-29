@@ -58,6 +58,9 @@ exports.userRepo = {
         const user = await user_model_1.User.create(data);
         return user.toObject();
     },
+    async updateKycdocuments(id, data) {
+        return user_model_1.User.findByIdAndUpdate(id, { $set: data }, { new: true });
+    },
     // Alias
     async createNewUser(data) {
         const user = await user_model_1.User.create(data);
