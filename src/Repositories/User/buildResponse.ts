@@ -11,7 +11,7 @@ export const buildUserResponse = (
   role: UserRole | null,
   modules: IModule[]
 ): UpdateUserResponse => {
-  const sanitizedUser = sanitizeUser(user.toObject());
+  const sanitizedUser = sanitizeUser(user);
   delete sanitizedUser.user_role;
 
   return {
